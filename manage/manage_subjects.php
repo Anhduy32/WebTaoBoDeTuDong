@@ -2,6 +2,7 @@
 session_start();
 include '../config/database.php'; 
 
+//lấy thông tin từ database
 $truy_van = "SELECT 
                 subjects.*, 
                 users.full_name AS teacher_name

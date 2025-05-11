@@ -8,15 +8,15 @@ if (!isset($_SESSION['username'])) {
 }
 include '../config/database.php';
 include '../require_profile_update.php';
-$ten_giao_vien = $_SESSION['username'];
 
+
+$ten_giao_vien = $_SESSION['username'];
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 $sql_subjects = "SELECT id, name AS subject_name, department FROM subjects";
 $subjects_result = $conn->query($sql_subjects);
 
-
+//Lấy câu hỏi
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $noi_dung_cau_hoi = trim($_POST['question_text']);
     $dap_an_a = trim($_POST['answer_a']);
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($noi_dung_cau_hoi) || empty($dap_an_a) || empty($dap_an_b) || empty($dap_an_c) || empty($dap_an_d) || empty($dap_an_dung) || empty($do_kho) || empty($nganh) || empty($subject_id)) {
         die("Vui lòng điền đầy đủ thông tin.");
     }
-
+//add vào databse
     $truy_van = "INSERT INTO create_questions 
         (question_text, answer_a, answer_b, answer_c, answer_d, correct_answer, difficulty, teacher_name, category, subject_id) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

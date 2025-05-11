@@ -6,11 +6,10 @@ include '../require_profile_update.php';
 $nganh = $_GET['nganh'] ?? '';
 $subject_id = $_GET['subject_id'] ?? '';
 $so_luong_cau = ['Dễ' => 0, 'Khá' => 0, 'Khó' => 0];
-
 $sql_nganh = "SELECT DISTINCT department FROM subjects";
 $ds_nganh = $conn->query($sql_nganh);
-
 $ds_bo_mon = [];
+
 if ($nganh) {
     $sql_subjects = "SELECT id, name FROM subjects WHERE department = ?";
     $stmt = $conn->prepare($sql_subjects);
@@ -42,7 +41,7 @@ if ($subject_id) {
 <head>
     <meta charset="UTF-8">
     <title>Thống kê số câu hỏi theo Bộ môn</title>
-    <link rel="stylesheet" href="../css/style.css?v=<?= time(); ?>">
+    <link rel="stylesheet" href="../css/style.css?v=<?= time(); ?>">   
     <script>
         function filterQuestionsByDifficulty() {
             var difficulty = document.getElementById("difficulty").value;

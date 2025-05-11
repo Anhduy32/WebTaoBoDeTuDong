@@ -8,7 +8,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 }
 
 $question_id = $_GET['id'];
-
 $sql = "SELECT * FROM create_questions WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $question_id);
@@ -20,7 +19,7 @@ if ($result->num_rows === 0) {
 }
 
 $question = $result->fetch_assoc();
-
+// lấy yêu cầu người sửa
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $question_text = $_POST['question_text'];
     $answer_a = $_POST['answer_a'];

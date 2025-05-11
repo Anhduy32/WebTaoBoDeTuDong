@@ -7,6 +7,7 @@ if (!isset($_SESSION['username'])) {
 
 include '../config/database.php';
 
+
 $ten_dang_nhap = $_SESSION['username'];
 $truy_van = "SELECT * FROM users WHERE username = ?";
 $chuan_bi = $conn->prepare($truy_van);
@@ -15,6 +16,7 @@ $chuan_bi->execute();
 $ket_qua = $chuan_bi->get_result();
 $nguoi_dung = $ket_qua->fetch_assoc();
 
+// Lấy thông tin người dùng
 $ho_va_ten = $nguoi_dung['full_name'] ?? '';
 $ngay_sinh = $nguoi_dung['birthdate'] ?? '';
 $gioi_tinh = $nguoi_dung['gender'] ?? '';

@@ -10,14 +10,14 @@ require $autoloadPath;
 
 use Dompdf\Dompdf;
 
-
+// lấy dsach ngành
 function layDanhSachNganh($conn) {
     $sql = "SELECT DISTINCT department FROM subjects";
     $result = $conn->query($sql);
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-
+// lấy dsach môn theo ngành
 function layDanhSachMon($conn, $nganh) {
     $sql = "SELECT id, name FROM subjects WHERE department = ?";
     $stmt = $conn->prepare($sql);
@@ -26,7 +26,7 @@ function layDanhSachMon($conn, $nganh) {
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-
+// lấy dsach môn
 function layTenMon($conn, $subject_id) {
     $sql = "SELECT name FROM subjects WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -39,7 +39,7 @@ function layTenMon($conn, $subject_id) {
     return null;
 }
 
-
+// Lấy dsach các câu hỏi theo mức độ
 function layCauHoi($conn, $muc_do, $nganh, $mon, $so_luong) {
     $sql = "SELECT * FROM create_questions WHERE difficulty = ? AND category = ? AND subject_id = ? ORDER BY RAND() LIMIT ?";
     $stmt = $conn->prepare($sql);
