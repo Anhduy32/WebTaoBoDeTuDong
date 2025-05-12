@@ -48,7 +48,7 @@ function layCauHoi($conn, $muc_do, $nganh, $mon, $so_luong) {
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-
+// lấy yêu cầu
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nganh']) && !isset($_POST['de'])) {
     $nganh = trim($_POST['nganh']);
     $mon_hoc_list = layDanhSachMon($conn, $nganh);
@@ -64,18 +64,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['de'], $_POST['kha'], 
 
    
     $ten_mon = layTenMon($conn, $mon);
-
     $ds_de = layCauHoi($conn, "Dễ", $nganh, $mon, $de);
     $ds_kha = layCauHoi($conn, "Khá", $nganh, $mon, $kha);
     $ds_kho = layCauHoi($conn, "Khó", $nganh, $mon, $kho);
 
-    if (count($ds_de) < $de || count($ds_kha) < $kha || count($ds_kho) < $kho) {
-        echo "<script>
-                alert('Không đủ câu hỏi trong cơ sở dữ liệu.\\nYêu cầu: $de Dễ, $kha Khá, $kho Khó.\\nHiện có: " . count($ds_de) . " Dễ, " . count($ds_kha) . " Khá, " . count($ds_kho) . " Khó.');
-                window.history.back();
-              </script>";
-        exit();
-    }
+if (count($ds_de) < $de || count($ds_kha) < $kha || count($ds_kho) < $kho) {
+    $thong_bao = "Không đủ câu hỏi trong cơ sở dữ liệu.\\nYêu cầu: $de Dễ, $kha Khá, $kho Khó.\\nHiện có: " . count($ds_de) . " Dễ, " . count($ds_kha) . " Khá, " . count($ds_kho) . " Khó." .  "\\nVui lòng thử lại";
+    echo "<script>
+            alert('$thong_bao');
+            window.location.href = '../Index.php'; // 
+          </script>";
+    exit();
+}
+
 
 
     $tat_ca = array_merge($ds_de, $ds_kha, $ds_kho);
